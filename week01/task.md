@@ -1,6 +1,7 @@
 # 作业1
 ## 1. 预习内容的前端目录
-* 前端框架：mvvm模式、vue、react、angularJs
+* 技术基础：html5 css3 JavaScript ECMAScript6 Nodejs
+* 前端框架：mvvm模式、vue、react、angular
 * 最佳实践：UI框架、组件、组件库、工具链、自动发布
 * 其他：计算机网络与前端性能
 * 技术前沿：flutter、WebAssembly、Serverless
