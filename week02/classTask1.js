@@ -24,7 +24,7 @@
 	| <MuiltiplicativeExpression>
 
 
-//更简便的方法
+//同学的更简便的方法
 <MuiltiplicativeExpression>::= 
 	<Number>
 	|<MuiltiplicativeExpression> * <Number>

@@ -10,7 +10,6 @@
 function UTF8_Encoding(str) {
 	var bytes =[];
 	//string -> char; char -> unicode码
-	
 	for (ch of str) {
 	    console.info("char:" + ch);
 	    /*用codePointAt而不是charCodeAt:

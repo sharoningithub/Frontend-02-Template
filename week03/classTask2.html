@@ -1,0 +1,117 @@
+<!-- 
+// 尝试找出JavaScript引擎中Realm里面的所有的对象
+// 可视化
+
+// 理解
+// realm 规定了 js 执行环境的范围 你可以理解为一个 js 容器内的环境 
+// js reaml 内的对象是指 js 运行环境在创建后的内置对象 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+</head>
+<body>
+	<div id="mountNode"></div>
+
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.1.0/build/g6.js"></script>
+<script>
+
+//找出reaml中的所有的对象
+var set = new Set();
+var objects = [
+    eval,
+    isFinite,
+    isNaN,
+    parseFloat,
+    parseInt,
+    decodeURI,
+    decodeURIComponent,
+    encodeURI,
+    encodeURIComponent,
+    Array,
+    Date,
+    RegExp,
+    Promise,
+    Proxy,
+    Map,
+    WeakMap,
+    Set,
+    WeakSet,
+    Function,
+    Boolean,
+    String,
+    Number,
+    Symbol,
+    Object,
+    Error,
+    EvalError,
+    RangeError,
+    ReferenceError,
+    SyntaxError,
+    TypeError,
+    URIError,
+    ArrayBuffer,
+    SharedArrayBuffer,
+    DataView,
+    Float32Array,
+    Float64Array,
+    Int8Array,
+    Int16Array,
+    Int32Array,
+    Uint8Array,
+    Uint16Array,
+    Uint32Array,
+    Uint8ClampedArray,
+    Atomics,
+    JSON,
+    Math,
+    Reflect];
+objects.forEach(o => set.add(o));
+
+for(var i = 0; i < objects.length; i++) {
+    var o = objects[i]
+    for(var p of Object.getOwnPropertyNames(o)) {
+        var d = Object.getOwnPropertyDescriptor(o, p)
+        if( (d.value !== null && typeof d.value === "object") || (typeof d.value === "function"))
+            if(!set.has(d.value)) {
+                set.add(d.value), objects.push(d.value);
+                }
+        if( d.get )
+            if(!set.has(d.get))
+                set.add(d.get), objects.push(d.get);
+        if( d.set )
+            if(!set.has(d.set))
+                set.add(d.set), objects.push(d.set);
+    }
+}
+
+var nodes = [];
+var i = 0;
+set.forEach((element, sameElement, set) => {
+	nodes.push({
+		id: element.name,
+		label: element.name,
+    	shape: 'rect',
+    	x:140 + 140 * (i%10),
+    	y:50 + 50 * Math.floor(i/10)
+	})
+	i++;
+});
+
+//G6 可视化
+const data = {
+  // 点集
+  nodes: nodes
+}
+const graph = new G6.Graph({
+  container: 'mountNode',
+  width: 1500, // Number，必须，图的宽度
+  height: 2500, // Number，必须，图的高度
+});
+graph.data(data);
+graph.render(); // 渲染图
+
+</script>
+</body>
+</html>
